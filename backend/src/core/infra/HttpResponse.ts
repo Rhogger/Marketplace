@@ -1,6 +1,4 @@
-export interface CustomError extends Error {
-	response?: any;
-}
+
 
 export type HttpResponse = {
 	statusCode: number
@@ -84,15 +82,11 @@ export function tooMany(error: Error): HttpResponse {
 	};
 }
 
-export function fail(error: CustomError) {
-	console.log(error);
-
-	const errorMessage = error?.response?.data ?? error.message;
-
+export function fail(error: Error) {
 	return {
 		statusCode: 500,
 		body: {
-			error: errorMessage,
+			error: error.message,
 		},
 	};
 }

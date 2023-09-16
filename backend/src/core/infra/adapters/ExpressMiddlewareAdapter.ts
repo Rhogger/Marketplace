@@ -10,7 +10,7 @@ export const adapterMiddleware = (middleware: Middleware) => {
 			...(request.query || {}),
 		};
 
-		const httpResponse = await middleware.handle(requestData, request.body);
+		const httpResponse = await middleware.handler(requestData, request.body);
 
 		if (httpResponse === false) {
 			return response.status(200).send();
