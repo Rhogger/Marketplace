@@ -3,7 +3,8 @@ type ProductProps = {
   name: string;
   description?: string;
   price: string;
-  rating?: number;
+  rate?: number
+  ratings?: RateProps[];
   comments?: CommentProps[];
 };
 
@@ -22,6 +23,13 @@ type CommentProps = {
   createdAt?: Date;
 }
 
+type RateProps = {
+  productId: number;
+  userId: number;
+  rate: number;
+  createdAt?: Date;
+}
+
 class Product {
   private products: ProductProps[] = [];
 
@@ -29,7 +37,9 @@ class Product {
     this.products.push({
       id: this.products.length + 1,
       ...product,
-      comments: []
+      comments: [],
+      rate: 0,
+      ratings: [],
     });
   }
 
@@ -86,6 +96,50 @@ class Product {
       ...commentProduct,
       createdAt: new Date()
     });
+  }
+
+  private rateIsValid(rate: number) {
+    return rate >= 0 && rate <= 5;
+  }
+
+  rate(rate: RateProps) {
+    const productIndex = this.findIndexById(rate.productId);
+
+    if (!productIndex) {
+      throw new Error("Produto não encontrado");
+    }
+
+    if (!this.rateIsValid(rate?.rate)) {
+      throw new Error("As avaliações devem ir de 0 até 5");
+    }
+
+    this.products[productIndex].ratings?.push({
+      ...rate,
+      createdAt: new Date()
+    });
+
+    const product = this.findById(rate.productId);
+
+    if (product?.ratings) {
+      let productRate = 0;
+      product?.ratings?.map((item: RateProps) => {
+        productRate += item.rate;
+      })
+
+      this.products[productIndex].rate = Math.round(productRate / product?.ratings?.length);
+    }
+  }
+
+  getRates(productId: number) {
+    const productIndex = this.findIndexById(productId);
+
+    if (!productIndex) {
+      throw new Error("Produto não encontrado");
+    }
+
+    const product = this.findById(productId);
+
+    return { rate: product?.rate, ratings: product?.ratings }
   }
 }
 

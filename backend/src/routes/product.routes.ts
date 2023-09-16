@@ -12,5 +12,7 @@ productRoutes.delete('/:id', adapterRoute(ProductController.delete));
 productRoutes.put('/:id', adapterRoute(ProductController.update));
 
 productRoutes.post('/:productId/comment', adapterRoute(ProductController.comment));
+productRoutes.post('/:productId/rating', adapterRoute(ProductController.rating));
+productRoutes.post('/:productId/rates', adapterRoute(ProductController.rates));
 
 export default productRoutes;

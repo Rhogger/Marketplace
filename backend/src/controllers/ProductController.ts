@@ -23,6 +23,13 @@ type CommentRequest = {
 	comment: string;
 }
 
+type RatingRequest = {
+	productId: number;
+	user: { id: number }
+	rate: number;
+}
+
+
 type CreateRequest = {
 	name: string;
 	description: string;
@@ -88,6 +95,28 @@ class ProductController {
 			});
 
 			return http.ok();
+		} catch (error) {
+			return http.fail(error);
+		}
+	}
+
+	static async rating({ productId, user, rate }: RatingRequest) {
+		try {
+			product.rate({
+				productId,
+				rate,
+				userId: user.id
+			});
+
+			return http.ok();
+		} catch (error) {
+			return http.fail(error);
+		}
+	}
+
+	static async rates({ productId }: { productId: number }) {
+		try {
+			return http.ok(product.getRates(productId));
 		} catch (error) {
 			return http.fail(error);
 		}
