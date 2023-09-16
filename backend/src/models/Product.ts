@@ -4,7 +4,7 @@ type ProductProps = {
   description?: string;
   price: string;
   rating?: number;
-  comments?: string[];
+  comments?: CommentProps[];
 };
 
 
@@ -15,13 +15,21 @@ type UpdateProductProps = {
   price?: string;
 };
 
+type CommentProps = {
+  productId: number;
+  userId: number;
+  comment: string;
+  createdAt?: Date;
+}
+
 class Product {
   private products: ProductProps[] = [];
 
   create(product: ProductProps): void {
     this.products.push({
       id: this.products.length + 1,
-      ...product
+      ...product,
+      comments: []
     });
   }
 
@@ -65,6 +73,19 @@ class Product {
       ...this.products[productIndex],
       ...updatedProduct,
     };
+  }
+
+  comment(commentProduct: CommentProps) {
+    const productIndex = this.findIndexById(commentProduct.productId);
+
+    if (!productIndex) {
+      throw new Error("Produto não encontrado");
+    }
+
+    this.products[productIndex].comments?.push({
+      ...commentProduct,
+      createdAt: new Date()
+    });
   }
 }
 

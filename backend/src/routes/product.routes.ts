@@ -11,4 +11,6 @@ productRoutes.get('/:id', adapterRoute(ProductController.find));
 productRoutes.delete('/:id', adapterRoute(ProductController.delete));
 productRoutes.put('/:id', adapterRoute(ProductController.update));
 
+productRoutes.post('/:productId/comment', adapterRoute(ProductController.comment));
+
 export default productRoutes;

@@ -17,6 +17,12 @@ type UpdateRequest = {
 	price?: string;
 }
 
+type CommentRequest = {
+	productId: number;
+	user: { id: number }
+	comment: string;
+}
+
 type CreateRequest = {
 	name: string;
 	description: string;
@@ -65,6 +71,20 @@ class ProductController {
 				name,
 				description,
 				price,
+			});
+
+			return http.ok();
+		} catch (error) {
+			return http.fail(error);
+		}
+	}
+
+	static async comment({ productId, comment, user }: CommentRequest): Promise<http.HttpResponse> {
+		try {
+			product.comment({
+				productId,
+				comment,
+				userId: user.id
 			});
 
 			return http.ok();
