@@ -8,11 +8,11 @@ type TokenMiddlewareRequest = {
 };
 
 class TokenMiddleware implements Middleware {
-  async handler({
-    authorization,
-  }: TokenMiddlewareRequest): Promise<HttpResponse> {
+  async handler({ authorization }: TokenMiddlewareRequest): Promise<HttpResponse> {
+    const token = authorization.slice(7);
+
     return new Promise((resolve, reject) => {
-      jwt.verify(authorization, SECRET_KEY, (error, user) => {
+      jwt.verify(token, SECRET_KEY, (error, user) => {
         if (error) {
           resolve(
             unauthorized({

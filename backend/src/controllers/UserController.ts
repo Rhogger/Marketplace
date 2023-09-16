@@ -1,7 +1,5 @@
 import { users } from '../core/factories/controllers/UserFactory';
 import * as http from '../core/infra/HttpResponse';
-import User from '../models/Users';
-
 
 type RegisterRequest = {
   username: string;
