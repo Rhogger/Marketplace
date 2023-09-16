@@ -1,13 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import SECRET_KEY from '../constants/SECRET_KEY';
 import jwt from 'jsonwebtoken';
+import { Middleware } from '../core/infra/Middleware';
 
-class TokenMiddleware {
-  static authenticate(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
+class TokenMiddleware implements Middleware {
+  static handle(request: Request, response: Response, next: NextFunction) {
     const { authorization } = request.headers;
 
     jwt.verify(authorization as string, SECRET_KEY, (error, user) => {
