@@ -13,6 +13,6 @@ productRoutes.put('/:id', adapterRoute(ProductController.update));
 
 productRoutes.post('/:productId/comment', adapterRoute(ProductController.comment));
 productRoutes.post('/:productId/rating', adapterRoute(ProductController.rating));
-productRoutes.post('/:productId/rates', adapterRoute(ProductController.rates));
+productRoutes.get('/:productId/rates', adapterRoute(ProductController.rates));
 
 export default productRoutes;
