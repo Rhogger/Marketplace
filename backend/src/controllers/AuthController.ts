@@ -1,58 +1,33 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Request, Response } from 'express';
-
 import User from '../models/User';
 import SECRET_KEY from '../constants/SECRET_KEY';
+import * as http from '../core/infra/HttpResponse';
 
 const user = new User();
 
 class AuthController {
-  static async signin(request: Request, response: Response) {
-    const { username, password } = request.body;
-
+  static async signin({ username, password }: any): Promise<http.HttpResponse> {
     const userFinded = user.findUserByUsername(username);
 
     if (!userFinded) {
-      response.json({
-        message: 'Usuário não encontrado',
-      });
-
-      return;
+      return http.notAllowed('Usuário não encontrado');
     }
 
     if (!(await bcrypt.compare(password, userFinded.password))) {
-      response.json({
-        message: 'Usuário ou senha incorreto.',
-      });
-
-      return;
+      return http.notAllowed('Usuário ou senha incorreto.');
     }
 
-    const token = jwt.sign(
-      {
-        id: userFinded.id,
-      },
-      SECRET_KEY,
-      {
-        expiresIn: '1h',
-      }
-    );
+    const token = jwt.sign({ id: userFinded.id, }, SECRET_KEY, { expiresIn: '1h' });
 
-    response.json({ token });
+    return http.ok({ token });
   }
 
-  static async signup(request: Request, response: Response) {
-    const { username, password } = request.body;
-
+  static async signup({ username, password }: any): Promise<http.HttpResponse> {
     const userFinded = user.findUserByUsername(username);
 
     if (userFinded) {
-      response.json({
-        message: 'Usuário já existe, tente outro Username.',
-      });
-
-      return;
+      return http.notAllowed('Usuário já existe, tente outro Username.');
     }
 
     user.createUser({
@@ -60,9 +35,7 @@ class AuthController {
       password,
     });
 
-    response.json({
-      message: 'Usuário criado.',
-    });
+    return http.ok();
   }
 }
 
