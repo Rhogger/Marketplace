@@ -1,6 +1,4 @@
-export interface CustomError extends Error {
-	response?: any;
-}
+
 
 export type HttpResponse = {
 	statusCode: number
@@ -57,11 +55,11 @@ export function forbidden(error: Error): HttpResponse {
 	};
 }
 
-export function notFound(error: Error): HttpResponse {
+export function notFound(message: string): HttpResponse {
 	return {
 		statusCode: 404,
 		body: {
-			error: error.message,
+			error: message,
 		},
 	};
 }
@@ -84,15 +82,11 @@ export function tooMany(error: Error): HttpResponse {
 	};
 }
 
-export function fail(error: CustomError) {
-	console.log(error);
-
-	const errorMessage = error?.response?.data ?? error.message;
-
+export function fail(error: Error) {
 	return {
 		statusCode: 500,
 		body: {
-			error: errorMessage,
+			error: error.message,
 		},
 	};
 }

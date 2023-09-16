@@ -6,22 +6,30 @@ type UserProps = {
   password: string;
 };
 
-class User {
-  private user: UserProps[] = [];
+class Users {
+  private users: UserProps[] = [];
 
   async createUser(user: UserProps) {
     const pass = await this.hashPassword(user.password);
 
     //TODO: Atualizar para utilizar no PRISMA
-    this.user.push({
-      id: this.user.length + 1,
+    this.users.push({
+      id: this.users.length + 1,
       username: user.username,
       password: pass,
     });
   }
 
   findUserByUsername(username: string) {
-    return this.user.find((user: UserProps) => user.username == username);
+    return this.users.find((user: UserProps) => user.username == username);
+  }
+
+  findUserById(id: number) {
+    return this.users.find((user: UserProps) => user.id == id);
+  }
+
+  allUsers() {
+    return this.users;
   }
 
   async hashPassword(plainTextPassword: string) {
@@ -40,4 +48,4 @@ class User {
   }
 }
 
-export default User;
+export default Users;
