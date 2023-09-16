@@ -4,8 +4,6 @@ import { adapterRoute } from '../core/infra/adapters/ExpressRouteAdapter';
 
 const authRoutes = express.Router();
 
-authRoutes.post('/signin', adapterRoute(AuthController.signin));
-
-authRoutes.post('/signup', adapterRoute(AuthController.signup));
+authRoutes.post('/login', adapterRoute(AuthController.signin));
 
 export default authRoutes;

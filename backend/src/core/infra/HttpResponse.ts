@@ -55,11 +55,11 @@ export function forbidden(error: Error): HttpResponse {
 	};
 }
 
-export function notFound(error: Error): HttpResponse {
+export function notFound(message: string): HttpResponse {
 	return {
 		statusCode: 404,
 		body: {
-			error: error.message,
+			error: message,
 		},
 	};
 }
