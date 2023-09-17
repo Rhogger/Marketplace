@@ -3,50 +3,119 @@ import { product } from '../core/factories/controllers/ProductFactory ';
 
 type CartProps = {
   id?: number;
-  idUser: number;
+  userId: number;
   products: ProductProps;
+  quantity: number;
+};
+
+type AddProductsProps = {
+  userId: number;
+  idProduct: number;
+  quantity: number;
+};
+
+type RemoveProductProps = {
+  idProduct: number;
+  userId: number;
+};
+
+type UpdateProductProps = {
+  userId: number;
+  idProduct: number;
   quantity: number;
 };
 
 class Cart {
   private cart: CartProps[] = [];
 
-  addProduct(idProduct: number, quantity: number, idUser: number) {
-    const productFinded = product.findById(idProduct);
+  addProduct(productOfCart: AddProductsProps) {
+    if (productOfCart.quantity < 0) {
+      throw new Error(
+        'Quantidade inválida. Permitido apenas números positivos!'
+      );
+    }
+
+    const productFinded = product.findById(productOfCart.idProduct);
 
     if (!productFinded) {
       throw new Error('Produto não encontrado');
     }
 
+    try {
+      const productsCart = this.findByIdProductAndUserId(
+        productOfCart.idProduct,
+        productOfCart.userId
+      );
+
+      this.updateProductQuantity({
+        userId: productOfCart.userId,
+        idProduct: productOfCart.idProduct,
+        quantity: productOfCart.quantity + productsCart.quantity,
+      });
+
+      return;
+    } catch (error) {
+      //nada
+    }
+
     this.cart.push({
       id: this.cart.length + 1,
-      idUser: idUser,
+      userId: productOfCart.userId,
       products: productFinded,
-      quantity: quantity,
+      quantity: productOfCart.quantity,
     });
+
+    // console.log(this.cart);
   }
 
-  removeProduct(idProduct: number, idUser: number) {
-    const index = this.findIndexByIdProductAndIdUser(idProduct, idUser);
+  removeProduct(productOfCart: RemoveProductProps) {
+    const index = this.findIndexByIdProductAndUserId(
+      productOfCart.idProduct,
+      productOfCart.userId
+    );
+
+    console.log(`Index remove (${index})`);
 
     this.cart.splice(index, 1);
   }
 
-  getUserCart(idUser: number): CartProps[] {
-    return this.cart.filter((cart: CartProps) => cart.idUser == idUser);
-  }
-
-  findIndexByIdProductAndIdUser(idProduct: number, idUser: number): number {
-    const cartIndex = this.cart.findIndex(
-      (cart: CartProps) =>
-        cart.products.id == idProduct && cart.idUser == idUser
+  updateProductQuantity(productOfCart: UpdateProductProps) {
+    const index = this.findIndexByIdProductAndUserId(
+      productOfCart.idProduct,
+      productOfCart.userId
     );
 
-    if (cartIndex === -1) {
-      return 0;
+    this.cart[index].quantity = productOfCart.quantity;
+  }
+
+  getUserCart(userId: number): CartProps[] {
+    return this.cart.filter((cart: CartProps) => cart.userId == userId);
+  }
+
+  findByIdProductAndUserId(idProduct: number, userId: number): CartProps {
+    const cartFinded = this.cart.find(
+      (cart: CartProps) =>
+        cart.products.id == idProduct && cart.userId == userId
+    );
+
+    if (!cartFinded) {
+      throw new Error('Produto não encontrado');
     }
 
-    return cartIndex;
+    return cartFinded;
+  }
+
+  findIndexByIdProductAndUserId(idProduct: number, userId: number): number {
+    const cartFinded = this.cart.findIndex(
+      (cart: CartProps) =>
+        cart.products.id == idProduct && cart.userId == userId
+    );
+
+    if (cartFinded === -1) {
+      throw new Error('Produto não encontrado');
+    }
+
+    return cartFinded;
   }
 }
 

@@ -2,40 +2,62 @@ import * as http from '../core/infra/HttpResponse';
 import { cart } from '../core/factories/controllers/CartFactory';
 
 type AddProductRequest = {
+  user: { id: number };
   idProduct: number;
-  idUser: number;
   quantity: number;
 };
 
 type RemoveProductRequest = {
+  user: { id: number };
   idProduct: number;
-  idUser: number;
+};
+
+type ListRequest = {
+  user: { id: number };
 };
 
 class CartController {
   static async add({
+    user,
     idProduct,
-    idUser,
     quantity,
   }: AddProductRequest): Promise<http.HttpResponse> {
-    cart.addProduct(idProduct, idUser, quantity);
-
-    return http.created();
+    try {
+      cart.addProduct({ userId: user.id, idProduct, quantity });
+      return http.created();
+    } catch (error) {
+      return http.fail(error);
+    }
   }
 
   static async remove({
     idProduct,
-    idUser,
+    user,
   }: RemoveProductRequest): Promise<http.HttpResponse> {
     try {
-      cart.removeProduct(idProduct, idUser);
+      cart.removeProduct({ idProduct, userId: user.id });
 
-      http.ok();
+      return http.ok();
     } catch (error) {
       return http.fail(error);
     }
+  }
 
-    return http.created();
+  static async update({
+    user,
+    idProduct,
+    quantity,
+  }: AddProductRequest): Promise<http.HttpResponse> {
+    try {
+      cart.updateProductQuantity({ userId: user.id, idProduct, quantity });
+      return http.ok();
+    } catch (error) {
+      return http.fail(error);
+    }
+  }
+
+  static async list({ user }: ListRequest): Promise<http.HttpResponse> {
+    return http.ok(cart.getUserCart(user.id));
   }
 }
 
