@@ -48,11 +48,11 @@ class Product {
   }
 
 
-  findIndexById(id: number): number {
+  findIndexById(id: number): number | false {
     const productIndex = this.products.findIndex((product: ProductProps) => product.id == id);
 
     if (productIndex === -1) {
-      return 0;
+      return false;
     }
 
     return productIndex;
@@ -65,7 +65,7 @@ class Product {
   delete(id: number) {
     const productIndex = this.findIndexById(id);
 
-    if (!productIndex) {
+    if (!productIndex && typeof productIndex == 'boolean') {
       throw new Error("Produto não encontrado");
     }
 
@@ -75,7 +75,7 @@ class Product {
   update(updatedProduct: UpdateProductProps): void {
     const productIndex = this.findIndexById(updatedProduct.id);
 
-    if (!productIndex) {
+    if (!productIndex && typeof productIndex == 'boolean') {
       throw new Error("Produto não encontrado");
     }
 
@@ -88,7 +88,7 @@ class Product {
   comment(commentProduct: CommentProps) {
     const productIndex = this.findIndexById(commentProduct.productId);
 
-    if (!productIndex) {
+    if (!productIndex && typeof productIndex == 'boolean') {
       throw new Error("Produto não encontrado");
     }
 
@@ -105,7 +105,7 @@ class Product {
   rate(rate: RateProps) {
     const productIndex = this.findIndexById(rate.productId);
 
-    if (!productIndex) {
+    if (!productIndex && typeof productIndex == 'boolean') {
       throw new Error("Produto não encontrado");
     }
 
@@ -133,7 +133,7 @@ class Product {
   getRates(productId: number) {
     const productIndex = this.findIndexById(productId);
 
-    if (!productIndex) {
+    if (!productIndex && typeof productIndex == 'boolean') {
       throw new Error("Produto não encontrado");
     }
 
