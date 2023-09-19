@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "eda1096b-bf9d-4300-b3d2-7bca253fa0ba",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29623510-eda1096b-bf9d-4300-b3d2-7bca253fa0ba"
+	},
+	"item": [
+		{
+			"name": "Buscar",
+			"id": "821a8e09-ddaa-4157-8b8b-e106437e2105",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk0OTY2MDAxLCJleHAiOjE2OTQ5Njk2MDF9.v74uhEbOmut5J4xBfA572XbepdvYHxvTTJ71_Stbfjo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
