@@ -26,7 +26,9 @@ class Order {
   private orders: OrderProps[] = [];
 
   createOrder(order: OrderProps) {
-    //TODO: Validar se possui produts no carrinhos
+    if (!order.products) {
+      throw new Error('Não é possível fazer um pedido sem produtos.');
+    }
 
     this.orders.push({
       id: this.orders.length + 1,
