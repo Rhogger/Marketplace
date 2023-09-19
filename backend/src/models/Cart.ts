@@ -1,7 +1,7 @@
 import { ProductProps } from './Product';
 import { product } from '../core/factories/controllers/ProductFactory ';
 
-type CartProps = {
+export type CartProps = {
   id?: number;
   userId: number;
   products: ProductProps;
@@ -54,9 +54,7 @@ class Cart {
       });
 
       return;
-    } catch (error) {
-      //nada
-    }
+    } catch (error) {}
 
     this.cart.push({
       id: this.cart.length + 1,
@@ -64,8 +62,6 @@ class Cart {
       products: productFinded,
       quantity: productOfCart.quantity,
     });
-
-    // console.log(this.cart);
   }
 
   removeProduct(productOfCart: RemoveProductProps) {
@@ -73,8 +69,6 @@ class Cart {
       productOfCart.idProduct,
       productOfCart.userId
     );
-
-    console.log(`Index remove (${index})`);
 
     this.cart.splice(index, 1);
   }
