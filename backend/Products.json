@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "021c6b6e-e2e1-4ce2-b69d-01fe9fe87f0d",
+		"name": "Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29623510-021c6b6e-e2e1-4ce2-b69d-01fe9fe87f0d"
+	},
+	"item": [
+		{
+			"name": "Buscar",
+			"id": "3faea2f9-44b7-4fc5-ab03-f42166e4cd4b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk0OTY5NzkzLCJleHAiOjE2OTQ5NzMzOTN9.7tcjBLuDuouq2x-6aM-lO6KS9AvjTAjRgb1WY-DOAag",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/product",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar",
+			"id": "fbb571c0-d425-4943-9edb-fbc0c995fbdf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk1MDgzMjgwLCJleHAiOjE2OTUwODY4ODB9.TV8dzv3XvCzafQ5F9SLjE651R6vjfCRD_ofRCBPgGGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Github do Jailsa\",\r\n    \"description\": \"Esse é o Github da Jailsa\",\r\n    \"price\": 0.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/product",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar avaliação",
+			"id": "b1491ded-9f61-4844-900f-98a5257e3387",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk0OTYzNjgxLCJleHAiOjE2OTQ5NjcyODF9.BrubZZU_wOlKCWxxigFco70xQb75Httmgaia_Ks8QXg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/product/1/rates",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"1",
+						"rates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Avaliar",
+			"id": "a27a32c3-4429-40c8-a2e8-5dc1837f3891",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk0OTYzNjgxLCJleHAiOjE2OTQ5NjcyODF9.BrubZZU_wOlKCWxxigFco70xQb75Httmgaia_Ks8QXg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rate\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/product/1/rating",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"1",
+						"rating"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
