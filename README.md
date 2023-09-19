@@ -27,6 +27,8 @@ Projeto desenvolvido durante atividade avaliativa da disciplina de Integração 
 Objetivo desse projeto foi desenvolver em grupo uma API REST de um e-commerce, onde eu fizesse o CRUD de produtos, adicionasse ao carrinho, criasse pedidos, entre outros e tudo isso com autenticação JWT.
 
 Mais detalhes da atividade poderão ser encontradas nos PDFs em [Trabalho parte 1](assets/pdf/Trabalho%20Parte%201.pdf) e [Trabalho parte 2](assets/pdf/Trabalho%20Parte%202.pdf).
+
+OBS: O frontend será construído durante a parte 3 desse trabalho.
 <br>
 <br>
 
