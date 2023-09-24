@@ -1,6 +1,7 @@
 import { CartProps } from './Cart';
 import { cart } from '../core/factories/controllers/CartFactory';
 import ViaCep from '../service/ViaCep';
+import validarCEP from '../shared/utils/cep.util';
 
 type OrderProps = {
   id?: number;
@@ -46,8 +47,12 @@ class Order {
       throw new Error('Não é possível fazer um pedido sem produtos.');
     }
 
+    if (!validarCEP(order.cep)) {
+      throw new Error('Cep inválido');
+    }
+
     const cepApi = new ViaCep("https://viacep.com.br/ws/");
-    const address = await cepApi.buscarCep(order.cep)
+    const address = await cepApi.buscarCep(order.cep);
 
     this.orders.push({
       id: this.orders.length + 1,

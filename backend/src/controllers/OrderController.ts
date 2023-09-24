@@ -33,7 +33,7 @@ class OrderController {
     cep
   }: CreateRequest): Promise<http.HttpResponse> {
     try {
-      order.createOrder({
+      await order.createOrder({
         userId: user.id,
         products,
         cep,
