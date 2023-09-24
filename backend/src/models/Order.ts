@@ -1,13 +1,29 @@
 import { CartProps } from './Cart';
 import { cart } from '../core/factories/controllers/CartFactory';
+import ViaCep from '../service/ViaCep';
 
 type OrderProps = {
   id?: number;
   userId: number;
   products: CartProps[];
-  date: Date;
-  status: string;
+  date?: Date;
+  status?: "processando" | "enviado" | "entregue";
+  cep: string;
+  address?: Address;
 };
+
+interface Address {
+  cep?: string;
+  logradouro?: string;
+  complemento?: string;
+  bairro?: string;
+  localidade?: string;
+  uf?: string;
+  ibge?: string;
+  gia?: string;
+  ddd?: string;
+  siafi?: string;
+}
 
 type GetOrdersProps = {
   id: number;
@@ -17,7 +33,7 @@ type GetOrdersProps = {
 type UpdateStatusOrderProps = {
   userId: number;
   id: number;
-  status: string;
+  status?: "processando" | "enviado" | "entregue";
 };
 
 type DeleteOrderProps = GetOrdersProps;
@@ -25,10 +41,13 @@ type DeleteOrderProps = GetOrdersProps;
 class Order {
   private orders: OrderProps[] = [];
 
-  createOrder(order: OrderProps) {
+  async createOrder(order: OrderProps) {
     if (!order.products) {
       throw new Error('Não é possível fazer um pedido sem produtos.');
     }
+
+    const cepApi = new ViaCep("https://viacep.com.br/ws/");
+    const address = await cepApi.buscarCep(order.cep)
 
     this.orders.push({
       id: this.orders.length + 1,
@@ -36,6 +55,8 @@ class Order {
       products: this.findCartByUserId(order.userId),
       date: new Date(),
       status: 'processando',
+      cep: order.cep,
+      address
     });
   }
 

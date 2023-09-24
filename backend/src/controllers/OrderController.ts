@@ -6,7 +6,7 @@ type CreateRequest = {
   user: { id: number };
   products: CartProps[];
   date: Date;
-  status: string;
+  cep: string;
 };
 
 type ListRequest = {
@@ -21,7 +21,7 @@ type ListAllRequest = {
 type UpdateRequest = {
   user: { id: number };
   idOrder: number;
-  status: string;
+  status?: "processando" | "enviado" | "entregue";
 };
 
 type DeleteRequest = ListRequest;
@@ -30,15 +30,13 @@ class OrderController {
   static async create({
     user,
     products,
-    date,
-    status,
+    cep
   }: CreateRequest): Promise<http.HttpResponse> {
     try {
       order.createOrder({
         userId: user.id,
         products,
-        date,
-        status,
+        cep,
       });
 
       return http.created();

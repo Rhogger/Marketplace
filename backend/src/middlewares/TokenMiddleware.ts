@@ -9,6 +9,12 @@ type TokenMiddlewareRequest = {
 
 class TokenMiddleware implements Middleware {
   async handler({ authorization }: TokenMiddlewareRequest): Promise<HttpResponse> {
+    if (!authorization) {
+      return unauthorized({
+        name: 'Unauthorized',
+        message: 'Token não é valido',
+      })
+    }
     const token = authorization.slice(7);
 
     return new Promise((resolve, reject) => {
