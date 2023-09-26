@@ -2,6 +2,7 @@ import { CartProps } from './Cart';
 import { cart } from '../core/factories/controllers/CartFactory';
 import ViaCep from '../service/ViaCep';
 import validarCEP from '../shared/utils/cep.util';
+import ExchangeRate from '../service/ExchangeRate';
 
 type OrderProps = {
   id?: number;

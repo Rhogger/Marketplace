@@ -1,8 +1,11 @@
+import ExchangeRate from "../service/ExchangeRate";
+
 export type ProductProps = {
   id?: number;
   name: string;
   description?: string;
   price: string;
+  otherPrice?: any;
   rate?: number;
   ratings?: RateProps[];
   comments?: CommentProps[];
@@ -32,13 +35,19 @@ type RateProps = {
 class Product {
   private products: ProductProps[] = [];
 
-  create(product: ProductProps): void {
+  async create(product: ProductProps): Promise<void> {
+    const exchangeApi = new ExchangeRate();
+    const conversion = await exchangeApi.convertCurrency();
+    const otherPrice = parseFloat(product.price) * conversion.conversion_rates.BRL;
+    //console.log(conversion);
+
     this.products.push({
       id: this.products.length + 1,
       ...product,
       comments: [],
       rate: 0,
       ratings: [],
+      otherPrice,
     });
   }
 

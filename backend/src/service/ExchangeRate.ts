@@ -1,15 +1,9 @@
 class ExchangeRate {
-    private apiUrl: string;
-    TOKEN = process.env.API_EXCHANGE_RATE_TOKEN
 
-    constructor(apiUrl: string) {
-        this.apiUrl = apiUrl;
-    }
+    async convertCurrency() :Promise<any> {
+        const response = await fetch(`https://v6.exchangerate-api.com/v6/65208ed2d0d0015ddffd7972/latest/USD`);
 
-    async convertCurrency(baseCurrency: string) {
-        const response = await fetch(`${this.apiUrl}${this.TOKEN}/latest/${baseCurrency}`);
-
-        return response;
+        return response.json();
     }
 }
 
